@@ -1,0 +1,11 @@
+<ul class="m-4 font-mono font-bold">
+    <li *ngFor="let category of categories"
+        (click) = "onCategoryClick()" 
+        class="w-5/6 mb-2 p-4 rounded-lg transform transition duration-400 ease-in-out hover:w-5/6 hover:rounded-lg hover:bg-white hover:shadow-xl">
+        <a [routerLink]="'products/category/' + category.id" 
+            class="block transform transition-all duration-300 ease-in-out"
+            routerLinkActive="text-slate-600 translate-x-5" 
+            [routerLinkActiveOptions]="{exact: false}"> <!-- makes it so that the routerLink only needs to match the begining of the url like [category/id]/products --> 
+            {{ category.categoryName }}</a>
+    </li>
+</ul>

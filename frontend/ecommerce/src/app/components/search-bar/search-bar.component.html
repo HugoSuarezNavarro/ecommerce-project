@@ -1,0 +1,13 @@
+<div class="relative w-full max-w-2xl md:mx-auto group">
+      <input #input 
+            placeholder="Type to search..." type="search"
+            [(ngModel)]="searchValue"
+            class="appearance-none border-2 rounded-2xl w-full pl-4 py-1 focus:outline-2 group focus:outline-slate-500 focus:border-slate-500  transition-transform group-focus-within:scale-[102%]"
+            (keyup)="searchByKeyword(input.value)"
+            (blur)="clearSearchInput()">
+      <svg
+        class="size-5 mr-2 absolute right-3 top-1/2 -translate-y-1/2 hover:scale-150 transition-all hover:cursor-pointer group-focus-within:scale-125"
+        (click)="searchByKeyword(input.value)">
+        <use xlink:href="images/icons/sprite.svg#search"></use>
+      </svg>
+</div>

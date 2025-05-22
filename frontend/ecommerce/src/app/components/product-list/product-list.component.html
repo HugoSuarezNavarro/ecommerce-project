@@ -1,0 +1,26 @@
+<div *ngIf="showGrid">
+    <div class="grid gap-4 m-4"
+            [ngClass]="products.length !== 0 ? 'grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'grid-cols-1'" @listAnimation>
+        <div *ngFor="let product of products"
+            class="rounded-lg pb-2 hover:scale-105 transition transform ease-out hover:bg-gray-200 product-card" >
+            <div class="">
+                <a routerLink="/products/{{ product.id }}" (click)="showGrid = !showGrid">
+                    <img [src]="product.imageUrl" alt="" class="w-full">
+                </a>
+            </div>
+            <div class="">
+                <a routerLink="/products/{{ product.id }}">
+                    <h1 class="h-20 text-md font-bold p-2">{{ product.name }}</h1>
+                </a>
+                <hr>
+                <div class="flex justify-between items-end">
+                    <span class=" text-xl font-bold pl-2 text-green-600">{{ product.unitsInStock}} units left</span>
+                    <span class=" text-2xl font-mono font-extrabold pr-2 text-sky-800">{{ product.unitPrice | currency:
+                        'EUR' }}</span>
+                </div>
+            </div>
+        </div>
+        @if (products.length == 0) {
+            <div class="block rounded-md mx-auto w-3/5 p-5 bg-amber-200/60 text-amber-400 font-bold text-center" role="alert">No products found</div>
+        }
+    </div>

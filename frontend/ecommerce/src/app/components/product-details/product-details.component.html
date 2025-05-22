@@ -1,0 +1,8 @@
+<div class="m-4">
+    @if (product) {
+    <p>{{ product.description }}</p>
+    } @else {
+    <div class="block rounded-md mx-auto w-3/5 p-5 bg-amber-200/60 text-amber-400 font-bold text-center" role="alert">
+        Product not found</div>
+    }
+</div>
