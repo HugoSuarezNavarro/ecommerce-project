@@ -8,19 +8,19 @@ import { Observable, catchError, map, of } from 'rxjs';
 })
 export class ProductService {
   
-  private BASE_URL = 'http://localhost:8080/api/products'
+  private BASE_URL = 'http://192.168.0.23:8080/api/products'
 
   constructor(private http: HttpClient) { }
   
   // if category  == 0 --> findAllProducts
-  getProductListByCategory(categoryId: number): Observable<Product[]> {
+  getProductListByCategory(page: number, size: number, categoryId: number): Observable<GetResponse | undefined> {
     const searchByCategoryUrl = `${this.BASE_URL}${categoryId != 0 ? '/category/'+categoryId : ''}`;
-    return this.getProducts(searchByCategoryUrl);
+    return this.getProductsPaginated(page, size, searchByCategoryUrl);
   }
 
-  getProductListByKeyword(keyword: string): Observable<Product[]> {
+  getProductListByKeyword(page: number, size: number, keyword: string): Observable<GetResponse | undefined> {
     const searchByKeywordUrl = `${this.BASE_URL}${'/search?keyword=' + keyword}`;
-    return this.getProducts(searchByKeywordUrl);
+    return this.getProductsPaginated(page, size,searchByKeywordUrl);
   }
   
   getProductDetails(id: number): Observable<Product | undefined> {
@@ -34,24 +34,39 @@ export class ProductService {
     );
   }
 
-  getProducts(searchUrl: string): Observable<Product[]> {
-    return this.http.get<GetResponse>(searchUrl).pipe(
-      map(response => response?.content || [])
+  getProductsPaginated(page: number, size: number, searchUrl: string): Observable<GetResponse | undefined> {
+    let url = '';
+    if (searchUrl.includes('?')) {
+      url = `${searchUrl}&page=${page}&size=${size}`; 
+    } else {
+      url = `${searchUrl}?page=${page}&size=${size}`;
+    }
+    return this.http.get<GetResponse>(url).pipe(
+      catchError(err => {
+        if (err.status === 404) {
+          return of(undefined);
+        }
+        throw err;
+      })
     )
   }
 }
 
 interface GetResponse {
-  content: Product[] // it has to be the same name as the json object (in this case an array of Product[] called content)
+  // it has to use the same names as the json response
+  content: Product[],
+  size: number,
+  totalElements: number,
+  totalPages: number,
+  number: number
 }
 
 
-
-
-
-
-
-
+// getProducts(searchUrl: string): Observable<Product[]> {
+//   return this.http.get<GetResponse>(searchUrl).pipe(
+//     map(response => response?.content || [])
+//   )
+// }
 
 
 // getProductList(): Observable<Product[]> {
@@ -60,11 +75,13 @@ interface GetResponse {
 //     map(response => response.content)
 //   )
 // }
+
 // getProductList(): Observable<Product[]> {
 //   return this.http.get<Product[]>(this.baseUrl).pipe(
 //     map(response => response._embedded.products)
 //   )
 // }
+
 // this.http.get<GetResponse> --> for a json with a structure from spring rest
 // interface GetResponse {
 //   _embedded: {

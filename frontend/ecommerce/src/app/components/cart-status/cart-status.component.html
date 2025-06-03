@@ -1,0 +1,32 @@
+<li class="relative group mr-4">
+  <a href="#" routerLink="/cart"
+     class="relative flex items-center pl-2 h-10 bg-white rounded-lg w-15 
+            transition-normal duration-300 ease-in-out group-hover:w-30 overflow-hidden group-hover:outline-2 outline-offset-1">
+    
+    <!-- Cart Icon -->
+    <div class="relative -translate-x-0 translate-y-0 transition-transform duration-300 ease-linear">
+      <svg class="size-8 group-hover:rotate-45 transition-transform ease-in-out duration-300">
+        <use xlink:href="images/icons/sprite.svg#cart"></use>
+      </svg>
+
+      <!-- Badge -->
+      <span 
+        [ngClass]="{
+          'translate-y-0 opacity-100 scale-100' : totalQuantity > 0,
+          'translate-y-4 opacity-0 scale-50' : totalQuantity == 0
+        }"
+        class="absolute right-0 top-0 bg-red-600 text-white text-[.6rem] font-bold rounded-full size-4 
+               flex items-center justify-center shadow-red-900 shadow-2xl 
+               transition-all duration-500 ease-out group-hover:translate-x-2 group-hover:-translate-y-1 group-hover:rotate-[720deg]">
+        {{ this.totalQuantity }}
+      </span>
+    </div>
+
+    <!-- Price box -->
+    <div 
+      class="absolute top-0 bottom-0 right-0 translate-x-0 opacity-0 flex items-center text-center text-white px-2 rounded-tr-lg rounded-br-lg 
+             transition-opacity duration-300 ease-out group-hover:opacity-100 bg-black">
+      {{ this.totalPrice | dynamicCurrency: 'EUR'}}
+    </div>
+  </a>
+</li>

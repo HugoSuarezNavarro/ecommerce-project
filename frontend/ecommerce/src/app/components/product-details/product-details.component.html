@@ -1,8 +1,39 @@
 <div class="m-4">
     @if (product) {
-    <p>{{ product.description }}</p>
+    <div class="rounded-lg pb-2 flex flex-col items-center">
+        <img [src]="product.imageUrl" alt="Product image" class="w-md lg:self-start">
+        <div class="text-center">
+            <h1 class="text-start text-md h-20  flex items-center font-bold p-2">{{ product.name }}</h1>
+            <hr>
+            <div class="flex justify-between items-end">
+                <span class=" text-xl font-bold text-green-600">{{ product.unitsInStock}} units left</span>
+                <span class=" text-2xl font-mono font-extrabold text-sky-800">
+                    {{ product.unitPrice | dynamicCurrency: 'EUR' }}
+                </span>
+            </div>
+            <div class="flex flex-col w-fit text-left mt-4 text-wrap">
+                <p class="text-base leading-relaxed">{{ product.description }}</p>
+                <button type="button"
+                    class="self-end w-3xs m-4 p-2 px-8 text-white font-bold bg-black  relative
+                        hover:bg-white hover:outline-2 hover:outline-offset-2 hover:text-black border-2 border-transparent hover:border-black 
+                        focus:ring-2 hover:scale-110 transform transition ease-out duration-500
+                        group cursor-pointer"
+                    (click)="addToCart()">
+                    <svg class="size-4 absolute left-10 top-3 -translate-x-5 group-hover:translate-x-5 transition transform duration-500 ease-in-out">
+                        <use xlink:href="images/icons/sprite.svg#right-arrow"></use>
+                    </svg>
+                    Add to cart
+                </button>
+            </div>
+        </div>
+        <br>
+        <a href="#" routerLink="/products"
+            class="mt-4 self-start font-bold hover:scale-105 hover:opacity-50 hover:text-sky-800 transform transition duration-200 ease-out">Back
+            to catalog</a>
+    </div>
     } @else {
     <div class="block rounded-md mx-auto w-3/5 p-5 bg-amber-200/60 text-amber-400 font-bold text-center" role="alert">
-        Product not found</div>
+        Product not found
+    </div>
     }
 </div>

@@ -2,10 +2,10 @@
 
 <header class="pb-2 border-b-1 border-gray-400 bg-white">
   <!-- TOP NAV -->
-  <nav class="flex justify-between px-2  border-gray-400">
+  <nav class="flex justify-between border-gray-400">
     <!-- LEFT  <- LOGO AND BURGER MENU -->
-    <ul class="flex justify-center items-center">
-      <li class="lg:hidden">
+    <ul class="flex justify-center items-center p-0">
+      <li class="p-3 lg:hidden">
         <a class="w-8 h-8 flex flex-col justify-center items-start space-y-1.5 hover:cursor-pointer"
           (click)="isOpen = !isOpen">
           <span class="h-[3px] bg-black rounded-full transition-all duration-900 origin-center"
@@ -27,7 +27,7 @@
       </li>
     </ul>
     <!-- RIGHT -> USER AND CART -->
-    <ul class="flex justify-center items-center">
+    <ul class="flex justify-center items-center p-0">
       <li>
         <a href="#">
           <svg class="size-8 mr-2">
@@ -35,13 +35,7 @@
           </svg>
         </a>
       </li>
-      <li>
-        <a href="#">
-          <svg class="size-8 mr-2">
-            <use xlink:href="images/icons/sprite.svg#cart"></use>
-          </svg>
-        </a>
-      </li>
+      <app-cart-status></app-cart-status>
     </ul>
   </nav>
   <!-- SEARCHBAR -->
@@ -49,10 +43,10 @@
     <app-search-bar></app-search-bar>
   </nav>
 </header>
-<main class="grid grid-cols-[auto_1fr] h-screen">
+<main class="grid lg:grid-cols-[auto_1fr] h-screen">
   <!-- SIDE MENU -->
   <aside
-    class="fixed top-0 sm:w-xl inset-0 z-40 bg-gray-300/80 backdrop-blur-xs transition-transform duration-500 ease-out transform lg:static lg:translate-x-0 lg:w-xs lg:h-screen"
+    class="fixed top-0 sm:w-xl inset-0 z-40 bg-gray-300/80 backdrop-blur-xs transition-transform duration-500 ease-out transform lg:static lg:translate-x-0 lg:w-75 lg:h-screen"
     [ngClass]="{
       'translate-x-0': isOpen,
       '-translate-x-full': !isOpen
@@ -61,16 +55,16 @@
     <a class="w-8 h-8 flex flex-col justify-center items-start space-y-1.5 z-50 transition-all duration-500 ease-out
            absolute top-4 right-4 lg:hidden hover:cursor-pointer" (click)="isOpen = !isOpen">
       <span class="h-[3px] bg-black rounded-full transition-all duration-900 origin-center"
-        [ngClass]="isOpen ? 'w-8 rotate-45 translate-y-[8.5px]' : 'w-8'"></span>
+        [ngClass]="isOpen ? 'w-8 rotate-135 translate-y-[17x]' : 'w-8'"></span>
       <span class="h-[3px] bg-black rounded-full transition-all duration-900 origin-center"
         [ngClass]="isOpen ? 'opacity-0' : 'w-4'"></span>
       <span class="h-[3px] bg-black rounded-full transition-all duration-900 origin-center"
-        [ngClass]="isOpen ? 'w-8 -rotate-45 -translate-y-[8.5px]' : 'w-6'"></span>
+        [ngClass]="isOpen ? 'w-8 -rotate-135 -translate-y-[17px]' : 'w-6'"></span>
     </a>
     <!-- NAVIGATION ITEMS -->
     <app-product-category-list (categoryClickEvent)="isOpen = !isOpen"></app-product-category-list>
   </aside>
-  <section class="overflow-y-auto w-full h-[calc(100vh-120px)]">
+  <section class="overflow-y-auto w-full h-[calc(100dvh-120px)]">
     <router-outlet></router-outlet> <!-- Renders the component based on routes (In this case product-list-component)-->
   </section>
 </main>

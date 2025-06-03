@@ -11,3 +11,22 @@ input[type="search"]::-webkit-search-results-decoration {
 @theme {
     --breakpoint-xs:430px; 
 }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100dvw;
+}
+
+/* overrides for ng-bootstrap pagination component */
+.pagination {
+  @apply flex gap-2 justify-center items-center;
+}
+.page-item .page-link {
+  @apply px-3 py-1 rounded-md border-2 border-gray-300 hover:bg-gray-100 transition-colors;
+}
+.page-item.active .page-link {
+  @apply bg-slate-600 text-white border-black;
+}
+

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin({"http://localhost:4200", "http://192.168.0.23:4200"})
 @RestController
 @RequestMapping("/api/product-category")
 public class ProductCategoryController {

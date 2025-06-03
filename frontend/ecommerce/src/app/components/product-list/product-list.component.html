@@ -1,26 +1,59 @@
 <div *ngIf="showGrid">
-    <div class="grid gap-4 m-4"
-            [ngClass]="products.length !== 0 ? 'grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'grid-cols-1'" @listAnimation>
-        <div *ngFor="let product of products"
-            class="rounded-lg pb-2 hover:scale-105 transition transform ease-out hover:bg-gray-200 product-card" >
+    <div class="grid grid-cols-1 gap-4 m-4"
+        [ngClass]="products.length != 0 ? 'grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'grid-cols-1'"
+        
+        >
+        <div *ngFor="let product of products" 
+            class="w-full min-h-full rounded-lg pb-2 hover:scale-105 transition transform ease-out hover:bg-gray-200 product-card"
+            @listAnimation
+            >
             <div class="">
-                <a routerLink="/products/{{ product.id }}" (click)="showGrid = !showGrid">
-                    <img [src]="product.imageUrl" alt="" class="w-full">
+                <a [routerLink]="['/products', product.id]" (click)="showGrid = !showGrid">
+                    <img [src]="product.imageUrl" alt="" class="w-full h-full">
                 </a>
             </div>
             <div class="">
-                <a routerLink="/products/{{ product.id }}">
+                <a [routerLink]="['/products', product.id]">
                     <h1 class="h-20 text-md font-bold p-2">{{ product.name }}</h1>
                 </a>
                 <hr>
-                <div class="flex justify-between items-end">
-                    <span class=" text-xl font-bold pl-2 text-green-600">{{ product.unitsInStock}} units left</span>
-                    <span class=" text-2xl font-mono font-extrabold pr-2 text-sky-800">{{ product.unitPrice | currency:
-                        'EUR' }}</span>
+                <div class="flex flex-col justify-between items-end">
+                    <span class=" text-2xl font-mono font-extrabold pr-2 text-sky-800">
+                        {{ product.unitPrice | dynamicCurrency: 'EUR' }}</span>
+                    <button type="button"
+                        class="self-end w-30 my-2 me-2 p-1 text-white font-bold bg-black
+                            hover:bg-white hover:outline-2 hover:outline-offset-2 hover:text-black border-2 border-transparent 
+                            hover:border-black focus:ring-2 hover:scale-110 transform transition ease-out duration-500 cursor-pointer"
+                            (click)="addToCart(product)">
+                        Add to cart
+                    </button>
                 </div>
             </div>
         </div>
         @if (products.length == 0) {
-            <div class="block rounded-md mx-auto w-3/5 p-5 bg-amber-200/60 text-amber-400 font-bold text-center" role="alert">No products found</div>
+        <div class="absolute left-0 right-0 lg:relative block rounded-md mx-auto w-3/5 p-5 bg-amber-200/60 text-amber-400 font-bold text-center"
+            role="alert">No products found
+        </div>
         }
     </div>
+    <!-- Pagination element  -->
+
+</div>
+@if (products.length != 0) {
+<div class="my-5 w-full flex flex-col md:flex-row justify-center items-center">
+    <ngb-pagination class="flex-1 mb-5" [(page)]="pageNumber" [pageSize]="pageSize" [collectionSize]="totalElements"
+        (pageChange)="listProducts()" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="false">
+    </ngb-pagination>
+    <div class="flex">
+        <span>Page Size</span>
+        <!-- can also use event binging like (change)="updatePageSize($event.target.value)" -->
+        <select [(ngModel)]="this.pageSize" (change)="updatePageSize(this.pageSize)"
+            class="ms-5 lg:me-20 w-15 border rounded-xs boder-2 border-black">
+            <option>5</option>
+            <option>10</option>
+            <option>20</option>
+            <option>50</option>
+        </select>
+    </div>
+</div>
+}

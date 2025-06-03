@@ -1,0 +1,35 @@
+<div class="flex flex-col items-center">
+    <ul class="w-4/5 px-20 my-5">
+        <h1 class="text-3xl font-semibold mb-5">Shopping cart</h1>
+        <li *ngFor="let item of cartItems" class="flex justify-between items-center w-full pe-5 mb-2  bg-slate-200/40 rounded-lg">
+            <div class="flex items-center">
+                <div class="h-30 ratio-12">
+                    <img [src]="item.imageUrl" alt="product image" class="h-30 w-fit">
+                </div>
+                <div>
+                    <h3 class="font-bold">{{ item.name }}</h3>
+                    <p class="font-semibold">Quanity: {{ item.quantity }}</p>
+                </div>
+            </div>
+            <div>
+                <p class="font-semibold">{{ item.unitPrice | dynamicCurrency: 'EUR'}}</p>
+            </div>
+        </li>
+    </ul>
+    
+    <ul class="w-4/5 px-20">
+        <h1 class="text-3xl font-semibold mb-5">Summary</h1>
+         <li class="flex justify-between pe-5 mb-2">
+            <p class="text-sky-700 font-bold">Total price</p>
+            <p class="font-semibold">{{ totalPrice | dynamicCurrency: 'EUR' }}</p>
+        </li>
+        <li class="flex justify-between pe-5 mb-2">
+            <p class="text-sky-700 font-bold">Shipping</p>
+            <p class="font-semibold">Free</p>
+        </li>
+        <li class="flex justify-between pe-5 mb-2">
+            <p class="text-sky-700 font-bold">Total quantity</p>
+            <p class="font-semibold">{{ totalQuantity }}</p>
+        </li>
+    </ul>
+</div>
